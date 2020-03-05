@@ -5,6 +5,13 @@ const gameSchema = new mongoose.Schema({
   prompt: String
 });
 
-const Prompts = mongoose.model('prompt', gameSchema);
+const roomSchema = new mongoose.Schema({
+  room: String,
+  users: [String] 
+});
 
-module.exports = Prompts;
+const Prompts = mongoose.model('prompt', gameSchema);
+const Rooms = mongoose.model('room', roomSchema);
+
+module.exports.Prompts = Prompts;
+module.exports.Rooms = Rooms;

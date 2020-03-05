@@ -1,5 +1,5 @@
 const db = require('./');
-const Prompts = require('./model.js');
+const models = require('./model.js');
 
 var promptsCollection = [
 "Who is most likely to become famous?",
@@ -125,7 +125,7 @@ var promptsCollection = [
 
 const seedData = () => {
   promptsCollection.forEach((prompt, index) => {
-    Prompts.create({ id: index + 1, prompt });
+    models.Prompts.create({ id: index + 1, prompt });
   });
   console.log('data seeded');
 }

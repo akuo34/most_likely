@@ -1,42 +1,58 @@
 import React from 'react';
-import Axios from 'axios';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Lobby from './Lobby';
+import Room from './Room';
 
-export default class AKapp extends React.Component {
-  constructor(props) {
-    super(props);
+const AKapp = () => {
+  return (
+    <Router>
+      <Route path="/" exact component={Lobby}></Route>
+      <Route path="/room" exact component={Room}></Route>
+    </Router>
+  );
+}
 
-    this.state = {
-      prompts: [],
-      displayed: null
-    }
-  }
+export default AKapp;
 
-  componentDidMount() {
-    this.getAllPrompts();
-  }
 
-  getAllPrompts() {
-    Axios.get('/api')
-      .then((response) => {
 
-        var firstPromptIndex = Math.floor(Math.random()*(response.data.length));
-        var displayed = response.data[firstPromptIndex];
-        response.data.splice(firstPromptIndex, 1);
+// export default class AKapp extends React.Component {
+//   constructor(props) {
+//     super(props);
 
-        this.setState({
-          prompts: response.data,
-          displayed
-        }, () => console.log(this.state));
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+//     this.state = {
+//       prompts: [],
+//       displayed: null
+//     }
+//   }
 
-  render() {
-    return (
+//   componentDidMount() {
+//     this.getAllPrompts();
+//   }
 
-      <div>HI</div>
-    )
-  }
-};
+//   getAllPrompts() {
+//     Axios.get('/api')
+//       .then((response) => {
+
+//         var firstPromptIndex = Math.floor(Math.random()*(response.data.length));
+//         var displayed = response.data[firstPromptIndex];
+//         response.data.splice(firstPromptIndex, 1);
+
+//         this.setState({
+//           prompts: response.data,
+//           displayed
+//         }, () => console.log(this.state));
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//       });
+//   }
+
+//   render() {
+//     return (
+//       <div>
+//         <Lobby />
+//       </div>
+//     );
+//   }
+// };
