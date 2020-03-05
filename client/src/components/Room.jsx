@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
-import Axios from 'axios';
 import io from 'socket.io-client';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Game from './Game';
 
 const Room = () => {
   const [room, setRoom] = useState('');
@@ -27,27 +28,73 @@ const Room = () => {
     setRoom(newRoom);
     setName(name);
 
-    socket = io(endpoint)
+    let socket = io(endpoint);
 
     socket.emit('join', { name, newRoom });
-    
+
     // setPlayers([...players, name]);
     socket.on('players', (players) => {
       setPlayers(players);
     });
-    
+
     return () => {
       socket.emit('disconnect');
       socket.off();
     }
-  }, [endpoint, location.search]);
+  }, [endpoint]);
+
+  useEffect(() => {
+    let socket = io(endpoint);
+
+    socket.emit('start game', { room });
+    socket.on('players', (players) => {
+      players.forEach((player) => {
+        if (player === name) {
+          window.location.href = `localhost:3500/game?room=${room}&name=${player}`;
+        }
+      });
+    })
+    return () => {
+      socket.emit('disconnect');
+      socket.off();
+    }
+  }, [window.location.href]);
 
   return (
     <div>
-      <div>Welcome to room {room}, {name}</div>
-      <ul>People in the room: {players.map((player) => {
-        return <li>{player}</li>
-      })} </ul>
+      <h2>Welcome, {name}! Room Code: {room}</h2>
+      <ul>People in the room:
+        {players.map((player, key) => {
+          return <li key={key}>{player}</li>
+        })}
+      </ul>
+      {players.length > 1 ?
+        <Link 
+        // onClick={() => {
+        //   let socket = io(endpoint);
+          
+        //   socket.emit('start game', {players, room});
+
+        //   socket.on('players', (players) => {
+        //     players.forEach((player) => {
+        //       if (player === name) {
+        //         window.location.href = `localhost:3500/game?room${room}&name=${name}`;
+        //       }
+        //     })
+        //   });
+
+        //   return () => {
+        //     socket.emit('disconnect');
+        //     socket.off();
+        //   }
+        // }}
+          to={`/game?room=${room}&name=${name}`}>
+          <button type="submit">Start game!</button>
+        </Link> : null
+      }
+      <Router>
+        <Route path={`/game?room=${room}&name=${name}`} exact component={Game}></Route>
+      </Router>
     </div>
   );
 }

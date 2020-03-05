@@ -30,6 +30,11 @@ io.on('connection', (socket) => {
     socket.join(newRoom);
     io.in(newRoom).emit('players', clients[newRoom]);
 
+  });
+
+  socket.on('start game', ({ room }) => {
+    console.log(room);
+    socket.to(room).emit('players', clients[room]);
   })
 
   console.log('New user connected');
