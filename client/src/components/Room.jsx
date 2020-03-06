@@ -29,36 +29,33 @@ const Room = () => {
     setName(name);
 
     let socket = io(endpoint);
-
     socket.emit('join', { name, newRoom });
 
     // setPlayers([...players, name]);
     socket.on('players', (players) => {
       setPlayers(players);
     });
-
-    return () => {
-      socket.emit('disconnect');
-      socket.off();
-    }
+    // return () => {
+    //   socket.emit('disconnect', { name, newRoom });
+    //   socket.on('players', (players) => {
+    //     setPlayers(players);
+    //   })
+    //   socket.off();
+    // }
   }, [endpoint]);
 
-  useEffect(() => {
-    let socket = io(endpoint);
+  // useEffect(() => {
+  //   let socket = io(endpoint);
 
-    socket.emit('start game', { room });
-    socket.on('players', (players) => {
-      players.forEach((player) => {
-        if (player === name) {
-          window.location.href = `localhost:3500/game?room=${room}&name=${player}`;
-        }
-      });
-    })
-    return () => {
-      socket.emit('disconnect');
-      socket.off();
-    }
-  }, [window.location.href]);
+  //   socket.emit('start game', { room });
+  //   socket.on('players', (players) => {
+  //     window.location.href = `localhost:3500/game?room=${room}&name=${name}`;
+  //   })
+  //   return () => {
+  //     socket.emit('disconnect');
+  //     socket.off();
+  //   }
+  // }, [window.location.href]);
 
   return (
     <div>
@@ -73,13 +70,12 @@ const Room = () => {
         // onClick={() => {
         //   let socket = io(endpoint);
           
-        //   socket.emit('start game', {players, room});
+        //   socket.emit('start game', {room});
 
         //   socket.on('players', (players) => {
+        //     console.log(players);
         //     players.forEach((player) => {
-        //       if (player === name) {
-        //         window.location.href = `localhost:3500/game?room${room}&name=${name}`;
-        //       }
+        //       window.location.href = `localhost:3500/game?room${room}&name=${name}`;
         //     })
         //   });
 
@@ -92,9 +88,6 @@ const Room = () => {
           <button type="submit">Start game!</button>
         </Link> : null
       }
-      <Router>
-        <Route path={`/game?room=${room}&name=${name}`} exact component={Game}></Route>
-      </Router>
     </div>
   );
 }
