@@ -65,7 +65,7 @@ const Room = () => {
           return <li key={key}>{player}</li>
         })}
       </ul>
-      {players.length > 1 ?
+      {players.length > 2 ?
         <Link 
         // onClick={() => {
         //   let socket = io(endpoint);
@@ -85,7 +85,7 @@ const Room = () => {
         //   }
         // }}
           to={`/game?room=${room}&name=${name}`}>
-          <button type="submit">Start game!</button>
+          <button type="submit">Ready!</button>
         </Link> : null
       }
     </div>
