@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import io from 'socket.io-client';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Game from './Game';
+import { Link } from 'react-router-dom';
 
 const Room = () => {
   const [room, setRoom] = useState('');
@@ -44,19 +43,6 @@ const Room = () => {
     // }
   }, [endpoint]);
 
-  // useEffect(() => {
-  //   let socket = io(endpoint);
-
-  //   socket.emit('start game', { room });
-  //   socket.on('players', (players) => {
-  //     window.location.href = `localhost:3500/game?room=${room}&name=${name}`;
-  //   })
-  //   return () => {
-  //     socket.emit('disconnect');
-  //     socket.off();
-  //   }
-  // }, [window.location.href]);
-
   return (
     <div>
       <h2>Welcome, {name}! Room Code: {room}</h2>
@@ -66,25 +52,7 @@ const Room = () => {
         })}
       </ul>
       {players.length > 2 ?
-        <Link 
-        // onClick={() => {
-        //   let socket = io(endpoint);
-          
-        //   socket.emit('start game', {room});
-
-        //   socket.on('players', (players) => {
-        //     console.log(players);
-        //     players.forEach((player) => {
-        //       window.location.href = `localhost:3500/game?room${room}&name=${name}`;
-        //     })
-        //   });
-
-        //   return () => {
-        //     socket.emit('disconnect');
-        //     socket.off();
-        //   }
-        // }}
-          to={`/game?room=${room}&name=${name}`}>
+        <Link to={`/game?room=${room}&name=${name}`}>
           <button type="submit">Ready!</button>
         </Link> : null
       }

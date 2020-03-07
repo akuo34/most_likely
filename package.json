@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server/index.js",
     "build": "webpack -w",
-    "seed": "node database/seed.js"
+    "seed": "node database/seed.js",
+    "instance": "sudo SSH -i /Users/akuo34/hackreactor/MVP/most_likely/hack_box.pem ubuntu@ec2-13-52-26-197.us-west-1.compute.amazonaws.com"   
   },
   "engines": {
     "node": "12.14.1"

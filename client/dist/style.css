@@ -1,0 +1,7 @@
+.AK-container-scoreboard {
+  display: flex;
+}
+
+.AK-scoreboard {
+  list-style-type: none;
+}
