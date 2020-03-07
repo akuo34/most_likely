@@ -84,7 +84,8 @@ io.on('connection', (socket) => {
         models.Prompts.find()
           .then((response) => {
             prompts[room] = response;
-            var rdmPrompt = Math.floor(Math.random() * (prompts[room].length + 1));
+            console.log(response);
+            var rdmPrompt = Math.floor(Math.random() * prompts[room].length);
             var currentPrompt = prompts[room][rdmPrompt].prompt;
             prompts[room].splice(rdmPrompt, 1);
             setTimeout(() => {
@@ -96,7 +97,7 @@ io.on('connection', (socket) => {
             console.error(err);
           })
       } else {
-        var rdmPrompt = Math.floor(Math.random() * (prompts[room].length));
+        var rdmPrompt = Math.floor(Math.random() * prompts[room].length);
         var currentPrompt = prompts[room][rdmPrompt].prompt;
         prompts[room].splice(rdmPrompt, 1);
         setTimeout(() => {
