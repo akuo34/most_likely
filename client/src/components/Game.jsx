@@ -20,7 +20,6 @@ const Game = () => {
   const [displayWinners, setDisplayWinners] = useState(false);
   const instructions = 'How to play: Select the player you think best satisfies the prompt. If you believe you will be the most picked person, vote for yourself.'
   const endpoint = 'http://13.52.26.197:3500';
-  // const socket = io(endpoint);
 
   const clickHandler = (event) => {
     let socket = io(endpoint);
@@ -33,24 +32,14 @@ const Game = () => {
       setDisplayWinners(true);
       if (winners.indexOf(vote) !== -1 && vote === name) {
         setScore(score + 2);
-        socket.emit('update score', { score: score + 2, name, room });
-        socket.on('scoreboard', (scoreboard) => {
-          setScoreboard(scoreboard);
-          // socket.off();
-        });
       } else if (winners.indexOf(vote) !== -1) {
         setScore(score + 1);
-        socket.emit('update score', { score: score + 1, name, room });
-        socket.on('scoreboard', (scoreboard) => {
-          setScoreboard(scoreboard);
-          // socket.off();
-        });
       } else {
-        // setScore(score);
+        setScore(score);
+
         socket.emit('update score', { score, name, room });
         socket.on('scoreboard', (scoreboard) => {
           setScoreboard(scoreboard);
-          // socket.off();
         });
       }
     });
@@ -64,13 +53,13 @@ const Game = () => {
   useEffect(() => {
     let socket = io(endpoint);
 
-    // setTimeout(() => {
+    setTimeout(() =>  {
       socket.emit('update score', { score, name, room });
       socket.on('scoreboard', (scoreboard) => {
         setScoreboard(scoreboard);
-        // socket.off();
       });
-    // })
+
+    })
   }, [score]);
 
   useEffect(() => {
@@ -93,8 +82,7 @@ const Game = () => {
       setPlayers(players);
       setScoreboard(initialScore);
       setHost(host);
-    });
-
+    })
   }, []);
 
   useEffect(() => {
@@ -117,7 +105,7 @@ const Game = () => {
   }, [ready]);
 
   return (
-    <div className="container-app">
+    <div>
       <div>
         {displayText ? waitingOn : null}
 
@@ -133,7 +121,7 @@ const Game = () => {
           return (
             <div>{winner}</div>
           )
-        }) : null}
+        }) : null }
         <h3>Scores</h3>
         <div className="AK-container-scoreboard">
           <ul className="AK-scoreboard">

@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
 
     var waitingOn = clients[room].length - waiting[room].length
 
-    // socket.join(room);
+    socket.join(room);
     let message = `waiting on ${waitingOn} more to play`
     let initialScore = scores[room];
 
@@ -78,7 +78,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('get prompt', ({ room, name }) => {
-    // socket.join(room);
+    socket.join(room);
     if (hosts[room] === name) {
       if (!prompts[room]) {
         models.Prompts.find()
@@ -90,7 +90,7 @@ io.on('connection', (socket) => {
             prompts[room].splice(rdmPrompt, 1);
             setTimeout(() => {
               io.in(room).emit('send prompt', { currentPrompt });
-              delete votes[room];
+  
             }, 10000);
           })
           .catch((err) => {
@@ -102,8 +102,8 @@ io.on('connection', (socket) => {
         prompts[room].splice(rdmPrompt, 1);
         setTimeout(() => {
           io.in(room).emit('send prompt', { currentPrompt });
-          delete votes[room];
           
+          delete votes[room];
         }, 10000);
       }
     }
@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
 
   socket.on('vote', ({ vote, name, room }) => {
 
-    // socket.join(room);
+    socket.join(room);
     if (!votes[room]) {
       votes[room] = {};
       votes[room][vote] = 1;
@@ -149,24 +149,24 @@ io.on('connection', (socket) => {
       console.log(winners);
       io.in(room).emit('winner', { winners });
 
-      socket.on('update score', ({ score, name, room }) => {
-        console.log(score)
-        if (!scores[room]) {
-          scores[room] = {};
-          scores[room][name] = score;
-        } else {
-          scores[room][name] = score;
-        }
-        console.log(scores[room]);
-        let scoreboard = scores[room];
-        io.in(room).emit('scoreboard', { scoreboard });
-      });
+      // socket.on('update score', ({ score, name, room }) => {
+      //   console.log(score)
+      //   if (!scores[room]) {
+      //     scores[room] = {};
+      //     scores[room][name] = score;
+      //   } else {
+      //     scores[room][name] = score;
+      //   }
+      //   console.log(scores[room]);
+      //   let scoreboard = scores[room];
+      //   io.in(room).emit('scoreboard', { scoreboard });
+      // });
     }
   });
 
   socket.on('update score', ({ score, name, room }) => {
     
-    // socket.join(room);
+    socket.join(room);
     if (!scores[room]) {
       scores[room] = {};
       scores[room][name] = score;
@@ -176,9 +176,6 @@ io.on('connection', (socket) => {
     console.log(scores[room]);
     io.in(room).emit('scoreboard', scores[room]);
   });
-
-
-
   // socket.on('start game', ({ room }) => {
   //   let players = clients[room];
   //   io.in(room).emit('players', { players });
