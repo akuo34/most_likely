@@ -40,33 +40,33 @@ const Game = (props) => {
       setDisplayWinners(true);
 
 
-      if (lastRound) {
-        var firstVote = Object.keys(scoreboard)[0];
-        var largestVote = scoreboard[firstVote];
-        var winner = firstVote;
-        var champs = [];
-        Object.keys(scoreboard).forEach((key) => {
-          if (scoreboard[key] > largestVote) {
-            largestVote = scoreboard[key];
-            winner = key;
-          }
-        })
-        champs.push(winner);
-        Object.keys(scoreboard).forEach((key) => {
-          if (scoreboard[key] === largestVote && key !== winner) {
-            champs.push(key);
-          }
-        })
-        setChamp(champs);
+      // if (lastRound) {
+      //   var firstVote = Object.keys(scoreboard)[0];
+      //   var largestVote = scoreboard[firstVote];
+      //   var winner = firstVote;
+      //   var champs = [];
+      //   Object.keys(scoreboard).forEach((key) => {
+      //     if (scoreboard[key] > largestVote) {
+      //       largestVote = scoreboard[key];
+      //       winner = key;
+      //     }
+      //   })
+      //   champs.push(winner);
+      //   Object.keys(scoreboard).forEach((key) => {
+      //     if (scoreboard[key] === largestVote && key !== winner) {
+      //       champs.push(key);
+      //     }
+      //   })
+      //   setChamp(champs);
 
-        setDisplayPrompt(false);
-        setDisplayButtons(false);
-        setDisplayWinners(false);
-        setDisplayChamp(true);
-        setLastRound(lastRound);
-        setDisplayScoreboard(false);
+      //   setDisplayPrompt(false);
+      //   setDisplayButtons(false);
+      //   setDisplayWinners(false);
+      //   setDisplayChamp(true);
+      //   setLastRound(lastRound);
+      //   setDisplayScoreboard(false);
 
-      }
+      // }
 
       if (winners.indexOf(vote) !== -1 && vote === name) {
         setScore(score + 2);
@@ -132,6 +132,36 @@ const Game = (props) => {
     socket.on('scoreboard', (scoreboard) => {
       setScoreboard(scoreboard);
       // socket.off();
+
+      if (lastRound) {
+        var firstVote = Object.keys(scoreboard)[0];
+        var largestVote = scoreboard[firstVote];
+        var winner = firstVote;
+        var champs = [];
+        Object.keys(scoreboard).forEach((key) => {
+          if (scoreboard[key] > largestVote) {
+            largestVote = scoreboard[key];
+            winner = key;
+          }
+        })
+        champs.push(winner);
+        Object.keys(scoreboard).forEach((key) => {
+          if (scoreboard[key] === largestVote && key !== winner) {
+            champs.push(key);
+          }
+        })
+        setChamp(champs);
+
+        setDisplayPrompt(false);
+        setDisplayButtons(false);
+        setDisplayWinners(false);
+        setDisplayChamp(true);
+        setLastRound(lastRound);
+        setDisplayScoreboard(false);
+
+      }
+
+
     });
     // })
   }, [score]);
@@ -204,7 +234,11 @@ const Game = (props) => {
             }) : null}
       {displayChamp ?
         <div class="container-banner">
-          <h1 className="banner">{champ} is the winner!!</h1>
+          {champ.map((x) => {
+            return <h1>{x}</h1>
+          })}
+          <h1 className="banner">is the winner!!</h1>
+          {/* <h1 className="banner">{champ} is the winner!!</h1> */}
           <a href="http://10.50.67.138:3000/" class="button-exit">Exit game</a>
         </div> : null}
       {displayScoreboard ?

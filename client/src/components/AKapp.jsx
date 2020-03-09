@@ -8,8 +8,8 @@ import io from 'socket.io-client';
 
 
 const AKapp = () => {
-  const endpoint = 'http://13.52.26.197:3500';
-  // const endpoint = 'http://localhost:3500';
+  // const endpoint = 'http://13.52.26.197:3500';
+  const endpoint = 'http://localhost:3500';
   const socket = io.connect(endpoint);
 
   return (

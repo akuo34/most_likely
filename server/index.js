@@ -92,7 +92,7 @@ io.on('connection', (socket) => {
             setTimeout(() => {
               io.in(room).emit('send prompt', { currentPrompt });
               delete votes[room];
-            }, 4000);
+            }, 8000);
           })
           .catch((err) => {
             console.error(err);
@@ -114,7 +114,7 @@ io.on('connection', (socket) => {
           io.in(room).emit('send prompt', { currentPrompt, lastRound });
           delete votes[room];
           
-        }, 6000);
+        }, 8000);
       }
     }
 
