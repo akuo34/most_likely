@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import io from 'socket.io-client';
 import Buttons from './Buttons';
+import { Link } from 'react-router-dom';
 
 const Game = (props) => {
   const [currentPrompt, setCurrentPrompt] = useState('');
@@ -191,17 +192,21 @@ const Game = (props) => {
       {displayText ? <h3 className="instructions">{instructions}</h3> : null}
       {displayPrompt ? <h3 className="instructions">{currentPrompt}</h3> : null}
       {displayButtons ?
-      <div className="container-buttons">
-        {displayButtons ? <Buttons players={players} clickHandler={clickHandler}></Buttons> : null}
-        {displayWinners ? winners.map((winner) => {
-          return (
-            <h3>{winner} is!!</h3>
-          )
-        }) : null}
+        <div className="container-buttons">
+          {displayButtons ? <Buttons players={players} clickHandler={clickHandler}></Buttons> : null}
 
-      </div> : null
-}
-      {displayChamp ? <h1 className="banner">{champ} is the winner!!</h1> : null}
+        </div> : null
+      }
+            {displayWinners ? winners.map((winner) => {
+              return (
+                <h3>{winner} is!!</h3>
+              )
+            }) : null}
+      {displayChamp ?
+        <div class="container-banner">
+          <h1 className="banner">{champ} is the winner!!</h1>
+          <a href="http://google.com" class="button-exit">Exit game</a>
+        </div> : null}
       {displayScoreboard ?
         <div className="AK-wrapper-scoreboard">
           <h3 className="AK-header-scores">Scores</h3>

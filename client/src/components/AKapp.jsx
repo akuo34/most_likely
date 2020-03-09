@@ -11,15 +11,7 @@ const AKapp = () => {
   const endpoint = 'http://13.52.26.197:3500';
   // const endpoint = 'http://localhost:3500';
   const socket = io.connect(endpoint);
-  // const updateScore = () => {
-  //   let socket = io(endpoint);
 
-  //   // setTimeout(() => {
-  //     socket.emit('update score', { score, name, room });
-  //     socket.on('scoreboard', (scoreboard) => {
-  //       setScoreboard(scoreboard);
-  //     });
-  // }
   return (
     <Router>
       <Route path="/" exact component={Lobby}></Route>
