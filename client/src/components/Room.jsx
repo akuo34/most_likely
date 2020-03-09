@@ -59,7 +59,7 @@ const Room = (props) => {
           return <li key={key}>{player}</li>
         })}
       </ul>
-      {players.length > 2 ?
+      {players.length > 0 ?
         <Link to={`/game?room=${room}&name=${name}`}>
           <button className="button" type="submit">Ready!</button>
         </Link> : null

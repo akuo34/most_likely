@@ -24,6 +24,7 @@ var prompts = {};
 var hosts = {};
 var votes = {};
 var scores = {};
+var rounds = {};
 
 io.on('connection', (socket) => {
 
@@ -91,7 +92,7 @@ io.on('connection', (socket) => {
             setTimeout(() => {
               io.in(room).emit('send prompt', { currentPrompt });
               delete votes[room];
-            }, 10000);
+            }, 4000);
           })
           .catch((err) => {
             console.error(err);
@@ -101,7 +102,16 @@ io.on('connection', (socket) => {
         var currentPrompt = prompts[room][rdmPrompt].prompt;
         prompts[room].splice(rdmPrompt, 1);
         setTimeout(() => {
-          io.in(room).emit('send prompt', { currentPrompt });
+          if (!rounds[room]) {
+            rounds[room] = 1;
+          } else {
+            rounds[room]++;
+          }
+
+          if (rounds[room] === 3) {
+            var lastRound = true;
+          }
+          io.in(room).emit('send prompt', { currentPrompt, lastRound });
           delete votes[room];
           
         }, 10000);

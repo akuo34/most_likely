@@ -4,12 +4,12 @@ import Lobby from './Lobby';
 import Room from './Room';
 import Game from './Game';
 import io from 'socket.io-client';
-// const endpoint = 'http://13.52.26.197:3500';
 
 
 
 const AKapp = () => {
-  const endpoint = 'http://localhost:3500';
+  const endpoint = 'http://13.52.26.197:3500';
+  // const endpoint = 'http://localhost:3500';
   const socket = io.connect(endpoint);
   // const updateScore = () => {
   //   let socket = io(endpoint);
