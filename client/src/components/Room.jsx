@@ -4,12 +4,14 @@ import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
 
 
-const Room = () => {
+const Room = (props) => {
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
   const [players, setPlayers] = useState([]);
   // const endpoint = 'http://13.52.26.197:3500';
-  const endpoint = 'http://localhost:3500';
+  // const endpoint = 'http://localhost:3500';
+  const socket = props.socket;
+
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
@@ -29,7 +31,7 @@ const Room = () => {
     setRoom(newRoom);
     setName(name);
 
-    let socket = io.connect(endpoint);
+    // let socket = io.connect(endpoint);
     socket.emit('join', { name, newRoom });
 
     // setPlayers([...players, name]);
@@ -45,7 +47,7 @@ const Room = () => {
     //   })
     //   socket.off();
     // }
-  }, [endpoint]);
+  }, []);
 
   return (
     <div className="container-app">

@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import io from 'socket.io-client';
 import Buttons from './Buttons';
 
-const Game = () => {
+const Game = (props) => {
   const [currentPrompt, setCurrentPrompt] = useState('');
   const [waitingOn, setWaitingOn] = useState('');
   const [ready, setReady] = useState(false);
@@ -20,11 +20,12 @@ const Game = () => {
   const [displayWinners, setDisplayWinners] = useState(false);
   const instructions = 'How to play: Select the player you think best satisfies the prompt. If you believe you will be the most picked person, vote for yourself.'
   // const endpoint = 'http://13.52.26.197:3500';
-  const endpoint = 'http://localhost:3500';
+  // const endpoint = 'http://localhost:3500';
   // const socket = io(endpoint);
+  const socket = props.socket;
 
   const clickHandler = (event) => {
-    let socket = io(endpoint);
+    // let socket = io(endpoint);
     let vote = event.target.value;
     console.log(vote);
     socket.emit('vote', { vote, name, room });
@@ -34,25 +35,25 @@ const Game = () => {
       setDisplayWinners(true);
       if (winners.indexOf(vote) !== -1 && vote === name) {
         setScore(score + 2);
-        socket.emit('update score', { score: score + 2, name, room });
-        socket.on('scoreboard', (scoreboard) => {
-          setScoreboard(scoreboard);
-          // socket.off();
-        });
+        // socket.emit('update score', { score: score + 2, name, room });
+        // socket.on('scoreboard', (scoreboard) => {
+        //   setScoreboard(scoreboard);
+        //   socket.off();
+        // });
       } else if (winners.indexOf(vote) !== -1) {
         setScore(score + 1);
-        socket.emit('update score', { score: score + 1, name, room });
-        socket.on('scoreboard', (scoreboard) => {
-          setScoreboard(scoreboard);
-          // socket.off();
-        });
+        // socket.emit('update score', { score: score + 1, name, room });
+        // socket.on('scoreboard', (scoreboard) => {
+        //   setScoreboard(scoreboard);
+        //   socket.off();
+        // });
       } else {
-        // setScore(score);
-        socket.emit('update score', { score, name, room });
-        socket.on('scoreboard', (scoreboard) => {
-          setScoreboard(scoreboard);
+        setScore(score);
+        // socket.emit('update score', { score, name, room });
+        // socket.on('scoreboard', (scoreboard) => {
+        //   setScoreboard(scoreboard);
           // socket.off();
-        });
+        // });
       }
     });
 
@@ -63,7 +64,7 @@ const Game = () => {
   }
 
   useEffect(() => {
-    let socket = io(endpoint);
+    // let socket = io(endpoint);
 
     // setTimeout(() => {
       socket.emit('update score', { score, name, room });
@@ -79,7 +80,7 @@ const Game = () => {
     setRoom(room);
     setName(name);
 
-    let socket = io(endpoint);
+    // let socket = io(endpoint);
 
     socket.emit('wait', { name, room });
     socket.on('waiting on', ({ message, initialScore, host }) => {
@@ -100,7 +101,7 @@ const Game = () => {
 
   useEffect(() => {
 
-    let socket = io(endpoint)
+    // let socket = io(endpoint)
 
     if (ready) {
       socket.emit('get prompt', { room, name });

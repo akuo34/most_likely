@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
 
     var waitingOn = clients[room].length - waiting[room].length
 
-    socket.join(room);
+    // socket.join(room);
     let message = `waiting on ${waitingOn} more to play`
     let initialScore = scores[room];
 
@@ -78,13 +78,13 @@ io.on('connection', (socket) => {
   })
 
   socket.on('get prompt', ({ room, name }) => {
-    socket.join(room);
+    // socket.join(room);
     if (hosts[room] === name) {
       if (!prompts[room]) {
         models.Prompts.find()
           .then((response) => {
             prompts[room] = response;
-            console.log(response);
+            // console.log(response);
             var rdmPrompt = Math.floor(Math.random() * prompts[room].length);
             var currentPrompt = prompts[room][rdmPrompt].prompt;
             prompts[room].splice(rdmPrompt, 1);
@@ -123,7 +123,7 @@ io.on('connection', (socket) => {
         votes[room][vote]++;
       }
     }
-    console.log(votes[room]);
+    // console.log(votes[room]);
     var totalVotes = 0;
     for (var key in votes[room]) {
       totalVotes += votes[room][key];
@@ -146,21 +146,21 @@ io.on('connection', (socket) => {
           winners.push(key);
         }
       })
-      console.log(winners);
+      // console.log(winners);
       io.in(room).emit('winner', { winners });
 
-      socket.on('update score', ({ score, name, room }) => {
-        console.log(score)
-        if (!scores[room]) {
-          scores[room] = {};
-          scores[room][name] = score;
-        } else {
-          scores[room][name] = score;
-        }
-        console.log(scores[room]);
-        let scoreboard = scores[room];
-        io.in(room).emit('scoreboard', { scoreboard });
-      });
+      // socket.on('update score', ({ score, name, room }) => {
+      //   console.log(score)
+      //   if (!scores[room]) {
+      //     scores[room] = {};
+      //     scores[room][name] = score;
+      //   } else {
+      //     scores[room][name] = score;
+      //   }
+      //   console.log(scores[room]);
+      //   let scoreboard = scores[room];
+      //   io.in(room).emit('scoreboard', { scoreboard });
+      // });
     }
   });
 
