@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import io from 'socket.io-client';
 import { Link } from 'react-router-dom';
 
+
 const Room = () => {
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
@@ -27,13 +28,15 @@ const Room = () => {
     setRoom(newRoom);
     setName(name);
 
-    let socket = io(endpoint);
+    let socket = io.connect(endpoint);
     socket.emit('join', { name, newRoom });
 
     // setPlayers([...players, name]);
     socket.on('players', (players) => {
       setPlayers(players);
+      // socket.off();
     });
+
     // return () => {
     //   socket.emit('disconnect', { name, newRoom });
     //   socket.on('players', (players) => {
@@ -44,16 +47,18 @@ const Room = () => {
   }, [endpoint]);
 
   return (
-    <div>
-      <h2>Welcome, {name}! Room Code: {room}</h2>
-      <ul>People in the room:
+    <div className="container-app">
+      <h2>Welcome, {name}!</h2>
+      <h3>Room code: {room}</h3>
+      <h3>People in the room:</h3>
+      <ul className="room-list">
         {players.map((player, key) => {
           return <li key={key}>{player}</li>
         })}
       </ul>
       {players.length > 2 ?
         <Link to={`/game?room=${room}&name=${name}`}>
-          <button type="submit">Ready!</button>
+          <button className="button" type="submit">Ready!</button>
         </Link> : null
       }
     </div>

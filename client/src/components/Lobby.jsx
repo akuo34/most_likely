@@ -6,19 +6,23 @@ const Lobby = () => {
   const [room, setRoom] = useState('');
 
   return (
-    <div>
-      <h1>Who's Most Likely</h1>
+    <div className="container-app">
+      <h1>Who's Most Likely?</h1>
       <div>
-        <input placeholder="Name" onChange={(event) => setName(event.target.value)} />
+        <input className="input" placeholder="Enter your name" onChange={(event) => setName(event.target.value.toUpperCase())} value={name} />
       </div>
-      <div>
-        <input placeholder="Room Code" onChange={(event) => setRoom(event.target.value)} />
+      <h3>Enter a code to join your friends</h3>
+      <div className="container-code-button">
+        <div>
+          <input className="input input-code" placeholder="Enter code" onChange={(event) => setRoom(event.target.value.toUpperCase())} value={room} />
+        </div>
+        <Link onClick={e => (!room || !name) ? e.preventDefault() : null} to={`/room?name=${name}&room=${room}`}>
+          <button className="button" type="submit">Join a room</button>
+        </Link>
       </div>
-      <Link onClick={e => (!room || !name) ? e.preventDefault() : null} to={`/room?name=${name}&room=${room}`}>
-        <button type="submit">Join a Room</button>
-      </Link>
+      <h3>Or start a new room</h3>
       <Link onClick={e => (!name) ? e.preventDefault() : null} to={`/room?name=${name}`}>
-        <button type="submit">Open a Room</button>
+        <button className="button" type="submit">New room</button>
       </Link>
     </div>
   );
