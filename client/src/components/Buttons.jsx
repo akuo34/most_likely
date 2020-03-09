@@ -6,7 +6,7 @@ const Buttons = (props) => {
       {props.players.map((player) => {
         return (
           <div>
-            <button onClick={props.clickHandler} value={player}>{player}</button>
+            <button className="button" onClick={props.clickHandler} value={player}>{player}</button>
           </div>
         )
       })}
