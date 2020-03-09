@@ -11,17 +11,20 @@ body {
 }
 
 .container-banner {
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-items: space-evenly;
+  position: relative;
 }
 
 .banner {
+  margin-top: 30px;
   text-align: center;
   justify-self: center;
   margin: auto;
-  
+  position: relative;
 }
 
 .container-buttons {

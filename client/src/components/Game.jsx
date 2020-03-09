@@ -205,7 +205,7 @@ const Game = (props) => {
       {displayChamp ?
         <div class="container-banner">
           <h1 className="banner">{champ} is the winner!!</h1>
-          <a href="http://google.com" class="button-exit">Exit game</a>
+          <a href="http://10.50.67.138:3000/" class="button-exit">Exit game</a>
         </div> : null}
       {displayScoreboard ?
         <div className="AK-wrapper-scoreboard">

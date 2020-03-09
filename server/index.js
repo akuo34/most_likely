@@ -114,7 +114,7 @@ io.on('connection', (socket) => {
           io.in(room).emit('send prompt', { currentPrompt, lastRound });
           delete votes[room];
           
-        }, 10000);
+        }, 6000);
       }
     }
 
