@@ -108,7 +108,7 @@ io.on('connection', (socket) => {
             rounds[room]++;
           }
 
-          if (rounds[room] === 3) {
+          if (rounds[room] === 10) {
             var lastRound = true;
           }
           io.in(room).emit('send prompt', { currentPrompt, lastRound });
