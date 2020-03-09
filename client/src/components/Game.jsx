@@ -19,7 +19,8 @@ const Game = () => {
   const [displayButtons, setDisplayButtons] = useState(false);
   const [displayWinners, setDisplayWinners] = useState(false);
   const instructions = 'How to play: Select the player you think best satisfies the prompt. If you believe you will be the most picked person, vote for yourself.'
-  const endpoint = 'http://13.52.26.197:3500';
+  // const endpoint = 'http://13.52.26.197:3500';
+  const endpoint = 'http://localhost:3500';
   // const socket = io(endpoint);
 
   const clickHandler = (event) => {

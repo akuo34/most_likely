@@ -8,7 +8,8 @@ const Room = () => {
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
   const [players, setPlayers] = useState([]);
-  const endpoint = 'http://13.52.26.197:3500';
+  // const endpoint = 'http://13.52.26.197:3500';
+  const endpoint = 'http://localhost:3500';
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);

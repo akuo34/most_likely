@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
 
     var waitingOn = clients[room].length - waiting[room].length
 
-    // socket.join(room);
+    socket.join(room);
     let message = `waiting on ${waitingOn} more to play`
     let initialScore = scores[room];
 
@@ -78,7 +78,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('get prompt', ({ room, name }) => {
-    // socket.join(room);
+    socket.join(room);
     if (hosts[room] === name) {
       if (!prompts[room]) {
         models.Prompts.find()
