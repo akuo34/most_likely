@@ -22,7 +22,7 @@ const Game = () => {
   const endpoint = 'http://13.52.26.197:3500';
 
   const clickHandler = (event) => {
-    let socket = io(endpoint);
+    // let socket = io(endpoint);
     let vote = event.target.value;
     console.log(vote);
     socket.emit('vote', { vote, name, room });
